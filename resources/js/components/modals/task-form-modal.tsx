@@ -102,7 +102,9 @@ export default function TaskFormModal({ isOpen, onClose, task, projects, default
                             onValueChange={(val: any) => setData('project_id', parseInt(val))}
                         >
                             <SelectTrigger>
-                                <SelectValue placeholder="Select a project" />
+                                <SelectValue placeholder="Select a project">
+                                    {data.project_id ? projects.find(p => p.id === data.project_id)?.name : "Select a project"}
+                                </SelectValue>
                             </SelectTrigger>
                             <SelectContent>
                                 <SelectGroup>
@@ -127,7 +129,7 @@ export default function TaskFormModal({ isOpen, onClose, task, projects, default
                         {errors.title && <p className="text-red-500 text-xs">{errors.title}</p>}
                     </div>
 
-                    {/* Priority & Description */}
+                        {/* Priority & Description */}
                     <div className="grid grid-cols-2 gap-4">
                         <div className="grid gap-2">
                             <Label className="text-xs font-bold uppercase text-gray-500">Priority</Label>
@@ -136,7 +138,9 @@ export default function TaskFormModal({ isOpen, onClose, task, projects, default
                             onValueChange={(val: any) => setData('priority', val)}
                         >
                             <SelectTrigger className="w-full max-w-48">
-                                <SelectValue placeholder="Select Priority" />
+                                <SelectValue placeholder="Select Priority">
+                                    {data.priority ? (data.priority === 'low' ? 'Low' : data.priority === 'medium' ? 'Medium' : 'High') : "Select Priority"}
+                                </SelectValue>
                             </SelectTrigger>
                             <SelectContent>
                                 <SelectGroup>

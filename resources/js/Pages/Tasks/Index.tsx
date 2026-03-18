@@ -28,12 +28,12 @@ interface Project {
 interface Props {
     projects: Project[];
     tasks: Task[];
-    filters: { search?: string; project_id?: number | null };
+    filters: { search?: string; project_id?: number | string | null };
 }
 
 export default function Index({ projects, tasks, filters }: Props) {
     const [search, setSearch] = useState(filters.search || '');
-    const [selectedProject, setSelectedProject] = useState<number | null>(filters.project_id || null);
+    const [selectedProject, setSelectedProject] = useState<number | null>(filters.project_id ? Number(filters.project_id) : null);
     const [localTasks, setLocalTasks] = useState(tasks);
 
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -85,6 +85,8 @@ export default function Index({ projects, tasks, filters }: Props) {
         router.post(route('tasks.reorder'), { orders }, { preserveScroll: true });
     };
 
+
+
     return (
         <MainLayout>
             <Head title="Tasks" />
@@ -95,7 +97,7 @@ export default function Index({ projects, tasks, filters }: Props) {
                     <h1 className="text-2xl font-bold text-gray-900">Tasks</h1>
                     <p className="text-sm text-gray-500">
                         {selectedProject 
-                            ? `Tasks for project: ${projects.find(p => p.id === selectedProject)?.name}`
+                            ? `Tasks for project: ${projects.find(p => p.id === selectedProject)?.name || 'Unknown Project'}`
                             : 'Manage and reorder your project tasks.'
                         }
                     </p>

@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\Task;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Service class for handling Task-related business logic.
@@ -88,7 +89,7 @@ class TaskService
      */
     public function updateOrderSequence(array $orders): bool
     {
-        \DB::transaction(function () use ($orders) {
+        DB::transaction(function () use ($orders) {
             foreach ($orders as $order) {
                 $task = $this->getById($order['id']);
                 $task->update(['order_sequence' => $order['order_sequence']]);

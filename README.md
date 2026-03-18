@@ -1,59 +1,129 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Task Manager Project
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A task management application built with Laravel, Inertia.js, React, and Tailwind CSS.
 
-## About Laravel
+## Offline Installation Guide (Zip Distribution)
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+This project is distributed as a zip file. The `node_modules` and `vendor` folders are **not included** to keep the file size small. You will need to install these dependencies locally.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### Prerequisites
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Before you begin, ensure you have the following installed on your system:
 
-## Learning Laravel
+1.  **PHP 8.2+** with the following extensions:
+    *   OpenSSL
+    *   PDO
+    *   Mbstring
+    *   Tokenizer
+    *   XML
+    *   Ctype
+    *   JSON
+2.  **Composer** (PHP package manager)
+3.  **Node.js** (LTS version recommended) & **npm**
+4.  **MySQL** (or MariaDB) database server
+5.  **Database management tool** (optional, e.g., phpMyAdmin, TablePlus, or command line)
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+---
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Step 1: Extract the Project
 
-## Laravel Sponsors
+Extract the zip file to your desired directory (e.g., `C:\projects\task-manager` or `/var/www/task-manager`).
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### Step 2: Configure the Environment
 
-### Premium Partners
+1.  The `.env` file is included in the zip. Open it in your text editor.
+2.  Update the database credentials to match your MySQL setup:
+    ```env
+    DB_CONNECTION=mysql
+    DB_HOST=127.0.0.1
+    DB_PORT=3306
+    DB_DATABASE=task_manager
+    DB_USERNAME=root
+    DB_PASSWORD=your_mysql_password
+    ```
+3.  **Important**: Generate the application key by running the following command in your terminal (in the project root):
+    ```bash
+    php artisan key:generate
+    ```
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+### Step 3: Setup the Database
 
-## Contributing
+1.  **Create the Database**:
+    *   Open your MySQL client (command line or GUI).
+    *   Create a new database named `task_manager`:
+        ```sql
+        CREATE DATABASE task_manager;
+        ```
+    *   If you prefer a different database name, update the `DB_DATABASE` value in your `.env` file accordingly.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+2.  **Run Migrations**:
+    *   In your terminal, navigate to the project root and run:
+        ```bash
+        php artisan migrate
+        ```
+    *   This will create all the necessary tables in your database.
 
-## Code of Conduct
+3.  **(Optional) Seed the Database**:
+    *   To populate the database with sample data, run:
+        ```bash
+        php artisan db:seed
+        ```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### Step 4: Install Dependencies
 
-## Security Vulnerabilities
+Since the zip file does not include `node_modules` or `vendor`, you need to install them:
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+1.  **Install PHP Dependencies**:
+    ```bash
+    composer install
+    ```
 
-## License
+2.  **Install Node.js Dependencies**:
+    ```bash
+    npm install
+    ```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### Step 5: Build the Frontend
+
+Compile the frontend assets (CSS and JavaScript):
+```bash
+npm run build
+```
+
+### Step 6: Run the Application
+
+You can now start the local development server:
+
+```bash
+php artisan serve
+```
+
+The application will be available at `http://127.0.0.1:8000`.
+
+---
+
+### Directory Structure Overview
+
+*   `app/`: Contains the core application logic (Models, Services, Controllers).
+*   `resources/js/`: Contains the React frontend components and Inertia.js pages.
+*   `database/`: Contains database migrations and seeders.
+*   `routes/`: Defines the application routes.
+*   `vendor/`: (Generated) PHP dependencies.
+*   `node_modules/`: (Generated) JavaScript dependencies.
+
+### Troubleshooting
+
+*   **"Class not found" error**: Run `composer dump-autoload`.
+*   **Frontend assets not loading**: Ensure you ran `npm install` and `npm run build`.
+*   **Database connection error**: Verify your MySQL credentials in `.env` and ensure the MySQL server is running.
+*   **Permission issues**: Ensure the project directory has appropriate read/write permissions.
+
+### Development
+
+To run the project in development mode (with hot-reloading for frontend and backend):
+
+```bash
+composer run dev
+```
+
+This will start the PHP server, queue worker, logs, and Vite dev server simultaneously.
