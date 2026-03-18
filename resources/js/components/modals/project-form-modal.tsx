@@ -1,3 +1,17 @@
+/**
+ * ProjectFormModal Component
+ * 
+ * A modal dialog for creating and editing projects.
+ * Handles form submission, validation, and error display.
+ * 
+ * Features:
+ * - Create new projects
+ * - Edit existing projects
+ * - Form validation with error messages
+ * - Loading state during submission
+ * - Auto-reset on close
+ */
+
 import React, { useEffect } from 'react';
 import { route } from 'ziggy-js';
 import { useForm } from '@inertiajs/react';
@@ -7,30 +21,51 @@ import {
     DialogHeader,
     DialogTitle,
     DialogFooter,
-} from "@/components/ui/dialog"; // Path based on your Shadcn setup
+} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button"; 
 
+/**
+ * Project interface for type safety
+ */
 interface Project {
     id?: number;
     name: string;
     description: string | null;
 }
 
+/**
+ * Props for ProjectFormModal component
+ */
 interface Props {
     isOpen: boolean;
     onClose: () => void;
     project?: Project | null;
 }
 
+/**
+ * ProjectFormModal Component
+ * 
+ * @param {boolean} isOpen - Whether the modal is open
+ * @param {function} onClose - Callback when modal is closed
+ * @param {Project | null} project - Project to edit (null for create)
+ * 
+ * @returns {JSX.Element} Rendered modal dialog
+ */
 export default function ProjectFormModal({ isOpen, onClose, project }: Props) {
+    /**
+     * Form state management using Inertia's useForm hook
+     */
     const { data, setData, post, put, processing, errors, reset, clearErrors } = useForm({
         name: project?.name || '',
         description: project?.description || '',
     });
 
+    /**
+     * Effect to sync form data when project or modal state changes
+     */
     useEffect(() => {
         if (project) {
             setData({ name: project.name, description: project.description || '' });
@@ -40,6 +75,10 @@ export default function ProjectFormModal({ isOpen, onClose, project }: Props) {
         clearErrors();
     }, [project, isOpen]);
 
+    /**
+     * Handle form submission
+     * Determines whether to create or update based on project existence
+     */
     const submit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const action = project ? put : post;

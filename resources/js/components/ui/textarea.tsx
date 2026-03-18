@@ -1,7 +1,29 @@
+/**
+ * Textarea Component
+ * 
+ * A reusable textarea component with consistent styling.
+ * Provides multi-line text input with validation states.
+ * 
+ * Features:
+ * - Auto-resizing based on content
+ * - Consistent height and spacing
+ * - Focus visible states with ring styling
+ * - Disabled states with pointer events and opacity
+ * - Accessible with aria-invalid support for validation errors
+ */
+
 import * as React from "react"
 
 import { cn } from "@/lib/utils"
 
+/**
+ * Textarea Component
+ * 
+ * @param {string} className - Additional CSS classes
+ * @param {...props} - Additional props passed to textarea element
+ * 
+ * @returns {JSX.Element} Rendered textarea element
+ */
 function Textarea({ className, ...props }: React.ComponentProps<"textarea">) {
   return (
     <textarea

@@ -1,5 +1,23 @@
+/**
+ * Footer Component
+ * 
+ * A footer component that displays copyright information, author details,
+ * and social media links.
+ * 
+ * Features:
+ * - Copyright notice with version
+ * - Author name with avatar initials
+ * - LinkedIn and GitHub profile links
+ * - Responsive layout
+ */
+
 import { usePage } from '@inertiajs/react';
 
+/**
+ * Footer Component
+ * 
+ * @returns {JSX.Element} Rendered footer element
+ */
 export default function Footer() {
     const { props } = usePage();
     const { author, linkedin, github } = props.app;

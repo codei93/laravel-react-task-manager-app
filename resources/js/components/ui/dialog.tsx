@@ -1,3 +1,17 @@
+/**
+ * Dialog Component
+ * 
+ * A reusable dialog/modal component built on top of @base-ui/react/dialog.
+ * Provides a consistent way to display modal dialogs in the application.
+ * 
+ * Features:
+ * - Multiple sub-components for flexibility
+ * - Accessible dialog structure
+ * - Customizable styling
+ * - Close button support
+ * - Focus management
+ */
+
 import * as React from "react"
 import { Dialog as DialogPrimitive } from "@base-ui/react/dialog"
 

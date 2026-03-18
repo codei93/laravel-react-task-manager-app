@@ -1,3 +1,17 @@
+/**
+ * Button Component
+ * 
+ * A reusable button component built on top of @base-ui/react/button.
+ * Supports multiple variants and sizes with consistent styling.
+ * 
+ * Features:
+ * - Multiple variants: default, outline, secondary, ghost, destructive, link
+ * - Multiple sizes: default, xs, sm, lg, icon variants
+ * - Focus visible states with ring styling
+ * - Disabled states with pointer events and opacity
+ * - Accessible with aria-invalid support
+ */
+
 import { Button as ButtonPrimitive } from "@base-ui/react/button"
 import { cva, type VariantProps } from "class-variance-authority"
 
@@ -40,6 +54,16 @@ const buttonVariants = cva(
   }
 )
 
+/**
+ * Button Component
+ * 
+ * @param {string} className - Additional CSS classes
+ * @param {string} variant - Button variant (default, outline, secondary, ghost, destructive, link)
+ * @param {string} size - Button size (default, xs, sm, lg, icon variants)
+ * @param {...props} - Additional props passed to ButtonPrimitive
+ * 
+ * @returns {JSX.Element} Rendered button element
+ */
 function Button({
   className,
   variant = "default",

@@ -1,11 +1,33 @@
+/**
+ * Sidebar Component
+ * 
+ * A navigation sidebar that provides quick access to main application sections.
+ * Shows active state based on current URL.
+ * 
+ * Features:
+ * - Navigation links to Projects and Tasks
+ * - Active state highlighting
+ * - Support for route aliases
+ * - Consistent styling with icons
+ */
+
 import { Link, usePage } from '@inertiajs/react';
 
+/**
+ * Sidebar Component
+ * 
+ * @returns {JSX.Element} Rendered sidebar navigation
+ */
 export default function Sidebar() {
     const { url } = usePage();
     
     // Extract pathname from URL (remove query parameters)
     const pathname = url.split('?')[0];
 
+    /**
+     * Navigation items configuration
+     * Each item includes name, href, icon, and optional aliases
+     */
     const navItems = [
         { name: 'Projects', href: '/', icon: '📁', aliases: ['/projects'] },
         { name: 'Tasks', href: '/tasks', icon: '✅', aliases: [] },

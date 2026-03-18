@@ -1,3 +1,17 @@
+/**
+ * Select Component
+ * 
+ * A reusable select dropdown component built on top of @base-ui/react/select.
+ * Provides a consistent way to display dropdown menus in the application.
+ * 
+ * Features:
+ * - Multiple sub-components for flexibility
+ * - Accessible select structure
+ * - Customizable styling
+ * - Search/filter support
+ * - Focus management
+ */
+
 import * as React from "react"
 import { Select as SelectPrimitive } from "@base-ui/react/select"
 

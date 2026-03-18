@@ -1,3 +1,16 @@
+/**
+ * TaskDeleteModal Component
+ * 
+ * A confirmation dialog for deleting tasks.
+ * Shows the task title and asks for confirmation before deletion.
+ * 
+ * Features:
+ * - Confirmation dialog with task details
+ * - Loading state during deletion
+ * - Prevents accidental deletions
+ * - Scroll preservation after deletion
+ */
+
 import React from 'react';
 import { useForm } from '@inertiajs/react';
 import { route } from 'ziggy-js';
@@ -13,15 +26,34 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from '../ui/button';
 
+/**
+ * Props for TaskDeleteModal component
+ */
 interface Props {
     isOpen: boolean;
     onClose: () => void;
     task: { id: number; title: string } | null;
 }
 
+/**
+ * TaskDeleteModal Component
+ * 
+ * @param {boolean} isOpen - Whether the modal is open
+ * @param {function} onClose - Callback when modal is closed
+ * @param {object | null} task - Task to delete (id and title)
+ * 
+ * @returns {JSX.Element} Rendered confirmation dialog
+ */
 export default function TaskDeleteModal({ isOpen, onClose, task }: Props) {
+    /**
+     * Form state for delete operation
+     */
     const { delete: destroy, processing } = useForm();
 
+    /**
+     * Handle delete confirmation
+     * Calls the destroy method with the task ID
+     */
     const handleDelete = (e: React.MouseEvent) => {
         e.preventDefault();
         if (!task) return;

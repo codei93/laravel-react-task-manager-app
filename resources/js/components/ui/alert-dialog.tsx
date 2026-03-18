@@ -1,3 +1,17 @@
+/**
+ * AlertDialog Component
+ * 
+ * A reusable alert dialog component built on top of @base-ui/react/alert-dialog.
+ * Provides a consistent way to display confirmation dialogs in the application.
+ * 
+ * Features:
+ * - Multiple sub-components for flexibility
+ * - Accessible dialog structure
+ * - Customizable styling
+ * - Confirmation actions
+ * - Focus management
+ */
+
 "use client"
 
 import * as React from "react"

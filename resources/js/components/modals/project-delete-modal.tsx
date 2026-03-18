@@ -1,3 +1,16 @@
+/**
+ * ProjectDeleteModal Component
+ * 
+ * A confirmation dialog for deleting projects.
+ * Shows the project name and warns about permanent deletion of associated tasks.
+ * 
+ * Features:
+ * - Confirmation dialog with project details
+ * - Warning about associated task deletion
+ * - Loading state during deletion
+ * - Prevents accidental deletions
+ */
+
 import React from 'react';
 import { useForm } from '@inertiajs/react';
 import {
@@ -11,15 +24,34 @@ import {
     AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 
+/**
+ * Props for ProjectDeleteModal component
+ */
 interface Props {
     isOpen: boolean;
     onClose: () => void;
     project: { id: number; name: string } | null;
 }
 
+/**
+ * ProjectDeleteModal Component
+ * 
+ * @param {boolean} isOpen - Whether the modal is open
+ * @param {function} onClose - Callback when modal is closed
+ * @param {object | null} project - Project to delete (id and name)
+ * 
+ * @returns {JSX.Element} Rendered confirmation dialog
+ */
 export default function ProjectDeleteModal({ isOpen, onClose, project }: Props) {
+    /**
+     * Form state for delete operation
+     */
     const { delete: destroy, processing } = useForm();
 
+    /**
+     * Handle delete confirmation
+     * Calls the destroy method with the project ID
+     */
     const handleDelete = (e: React.FormEvent) => {
         e.preventDefault();
         if (!project) return;

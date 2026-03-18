@@ -1,8 +1,31 @@
+/**
+ * Input Component
+ * 
+ * A reusable input component built on top of @base-ui/react/input.
+ * Provides consistent styling and validation states.
+ * 
+ * Features:
+ * - Consistent height and spacing
+ * - Focus visible states with ring styling
+ * - Disabled states with pointer events and opacity
+ * - Accessible with aria-invalid support for validation errors
+ * - File input support with custom styling
+ */
+
 import * as React from "react"
 import { Input as InputPrimitive } from "@base-ui/react/input"
 
 import { cn } from "@/lib/utils"
 
+/**
+ * Input Component
+ * 
+ * @param {string} className - Additional CSS classes
+ * @param {string} type - Input type (text, email, password, etc.)
+ * @param {...props} - Additional props passed to input element
+ * 
+ * @returns {JSX.Element} Rendered input element
+ */
 function Input({ className, type, ...props }: React.ComponentProps<"input">) {
   return (
     <InputPrimitive
