@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import { Head, router } from '@inertiajs/react';
+import { route } from 'ziggy-js';
 import MainLayout from '@/components/layouts/main-layout';
 import { Button } from '@/components/ui/button';
 
@@ -133,6 +134,13 @@ export default function Index({ projects, filters }: Props) {
                                           Edit
                                         </Button>
                                   
+                                        <Button 
+                                            onClick={() => router.get(route('tasks.index'), { project_id: project.id })} 
+                                            className="bg-blue-600 text-white"
+                                        >
+                                            View
+                                        </Button>
+
                                         <Button onClick={() => handleDeleteClick(project)} className="bg-red-700 text-white">Delete</Button>
                                     </td>
                                 </tr>

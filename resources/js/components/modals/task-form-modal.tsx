@@ -39,9 +39,10 @@ interface Props {
     onClose: () => void;
     task?: Task | null;
     projects: Project[]; // To populate the project selector
+    defaultProjectId?: number | null; // Default project ID for new tasks
 }
 
-export default function TaskFormModal({ isOpen, onClose, task, projects }: Props) {
+export default function TaskFormModal({ isOpen, onClose, task, projects, defaultProjectId }: Props) {
     const { data, setData, post, put, processing, errors, reset, clearErrors } = useForm({
         title: '',
         description: '',
@@ -59,15 +60,15 @@ export default function TaskFormModal({ isOpen, onClose, task, projects }: Props
                 project_id: task.project_id,
             });
         } else {
-           setData({
+            setData({
                 title: '',
                 description:'',
                 priority: 'medium',
-                project_id: 0,
+                project_id: defaultProjectId ?? null,
             });
         }
         clearErrors();
-    }, [task, isOpen]);
+    }, [task, isOpen, defaultProjectId]);
 
     const submit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -99,7 +100,6 @@ export default function TaskFormModal({ isOpen, onClose, task, projects }: Props
                         <Select 
                             value={data.project_id ? String(data.project_id) : ''}
                             onValueChange={(val: any) => setData('project_id', parseInt(val))}
-                            items={projects.map(p => ({ value: p.id.toString(), label: p.name }))}
                         >
                             <SelectTrigger>
                                 <SelectValue placeholder="Select a project" />
@@ -134,11 +134,6 @@ export default function TaskFormModal({ isOpen, onClose, task, projects }: Props
                         <Select 
                             value={data.priority} 
                             onValueChange={(val: any) => setData('priority', val)}
-                            items={[
-                                { value: 'low', label: 'Low' },
-                                { value: 'medium', label: 'Medium' },
-                                { value: 'high', label: 'High' }
-                            ]}
                         >
                             <SelectTrigger className="w-full max-w-48">
                                 <SelectValue placeholder="Select Priority" />

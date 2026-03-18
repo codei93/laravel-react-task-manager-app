@@ -35,14 +35,16 @@ class TaskController extends Controller
      */
     public function index(Request $request)
     {
-        // Get search term from the URL query string
+        // Get search term and project_id from the URL query string
         $searchTerm = $request->query('search');
+        $projectId = $request->query('project_id');
 
         return Inertia::render('Tasks/Index', [
             'projects' => $this->projectService->getAll(),
-            'tasks' => $this->taskService->getAll($searchTerm),
+            'tasks' => $this->taskService->getAll($searchTerm, $projectId),
             'filters' => [
                 'search' => $searchTerm,
+                'project_id' => $projectId,
             ],
         ]);
     }

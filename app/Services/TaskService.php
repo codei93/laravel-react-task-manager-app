@@ -16,13 +16,16 @@ class TaskService
     /**
      * Get all tasks.
      */
-    public function getAll(?string $searchTerm = null): Collection
+    public function getAll(?string $searchTerm = null, ?int $projectId = null): Collection
     {
         return Task::query()
             ->when($searchTerm, function ($query, $search) {
                 $query->where('title', 'like', "%{$search}%")
                     ->orWhere('description', 'like', "%{$search}%")
                     ->orWhere('priority', 'like', "%{$search}%");
+            })
+            ->when($projectId, function ($query, $projectId) {
+                $query->where('project_id', $projectId);
             })
             ->with('project')
             ->orderBy('order_sequence', 'asc')

@@ -28,11 +28,12 @@ interface Project {
 interface Props {
     projects: Project[];
     tasks: Task[];
-    filters: { search?: string };
+    filters: { search?: string; project_id?: number | null };
 }
 
 export default function Index({ projects, tasks, filters }: Props) {
     const [search, setSearch] = useState(filters.search || '');
+    const [selectedProject, setSelectedProject] = useState<number | null>(filters.project_id || null);
     const [localTasks, setLocalTasks] = useState(tasks);
 
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -62,10 +63,10 @@ export default function Index({ projects, tasks, filters }: Props) {
     // Handle Search with Debounce
     useEffect(() => {
         const timeout = setTimeout(() => {
-            router.get(route('tasks.index'), { search }, { preserveState: true, replace: true });
+            router.get(route('tasks.index'), { search, project_id: selectedProject }, { preserveState: true, replace: true });
         }, 300);
         return () => clearTimeout(timeout);
-    }, [search]);
+    }, [search, selectedProject]);
 
     // Handle Drag and Drop
     const onDragEnd = (result: DropResult) => {
@@ -92,10 +93,36 @@ export default function Index({ projects, tasks, filters }: Props) {
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
                 <div>
                     <h1 className="text-2xl font-bold text-gray-900">Tasks</h1>
-                    <p className="text-sm text-gray-500">Manage and reorder your project tasks.</p>
+                    <p className="text-sm text-gray-500">
+                        {selectedProject 
+                            ? `Tasks for project: ${projects.find(p => p.id === selectedProject)?.name}`
+                            : 'Manage and reorder your project tasks.'
+                        }
+                    </p>
                 </div>
 
                 <div className="flex items-center gap-3">
+                    {/* Project Filter */}
+                    <div className="relative">
+                        <select
+                            value={selectedProject || ''}
+                            onChange={(e) => setSelectedProject(e.target.value ? Number(e.target.value) : null)}
+                            className="block w-40 pl-3 pr-8 py-2 bg-white border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-gray-100 focus:border-gray-300 transition appearance-none"
+                        >
+                            <option value="">All Projects</option>
+                            {projects.map(project => (
+                                <option key={project.id} value={project.id}>
+                                    {project.name}
+                                </option>
+                            ))}
+                        </select>
+                        <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-gray-400">
+                            <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </div>
+                    </div>
+
                     {/* Search Bar */}
                     <div className="relative">
                         <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
@@ -105,7 +132,7 @@ export default function Index({ projects, tasks, filters }: Props) {
                             type="text"
                             value={search}
                             onChange={(e) => setSearch(e.target.value)}
-                            placeholder="Search projects..."
+                            placeholder="Search tasks..."
                             className="block w-64 pl-9 pr-3 py-2 bg-white border border-gray-200 rounded-lg text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-100 focus:border-gray-300 transition"
                         />
                         {search && (
@@ -118,7 +145,7 @@ export default function Index({ projects, tasks, filters }: Props) {
                         )}
                     </div>
 
-                     <Button onClick={handleCreate} className="bg-gray-900 text-white">
+                      <Button onClick={handleCreate} className="bg-gray-900 text-white">
                         + New Task
                       </Button>
                 </div>
@@ -199,6 +226,7 @@ export default function Index({ projects, tasks, filters }: Props) {
             onClose={() => setIsModalOpen(false)} 
             task={selectedTask} 
             projects={projects}
+            defaultProjectId={selectedProject}
             /> 
 
         <TaskDeleteModal 
